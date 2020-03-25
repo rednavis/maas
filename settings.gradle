@@ -1,0 +1,8 @@
+rootProject.name = 'maas'
+include 'maas-api'
+include 'maas-auth'
+include 'maas-vaadin'
+include 'maas-bpm'
+include 'maas-shared'
+include 'maas-sd'
+

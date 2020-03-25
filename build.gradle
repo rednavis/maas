@@ -1,0 +1,118 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.github.ben-manes.versions' version '0.28.0'
+    id 'org.springframework.boot' version '2.2.5.RELEASE' apply false
+    id 'com.google.cloud.tools.jib' version '2.1.0' apply false
+}
+
+ext {
+    maasVersion = '0.0.1-SNAPSHOT'
+    lombokVersion = '1.18.12'
+    mapstructVersion = '1.3.1.Final'
+    springBootVersion = '2.2.5.RELEASE'
+    springCloudVersion = 'Hoxton.SR3'
+    springDocVersion = '1.3.0'
+    nimbusJoseJwtVersion = '8.10'
+    vtPasswordVersion = '3.1.2'
+    jupiterVersion = '5.6.1'
+    testcontainersVersion = '1.13.0'
+    reactorTestVersion = '3.3.3.RELEASE'
+}
+
+allprojects {
+    apply plugin: 'project-report'
+    // needed because of multi-module configuration
+    apply plugin: 'jacoco'
+    apply plugin: 'io.spring.dependency-management'
+
+    configurations.all {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    }
+
+    dependencyManagement {
+        dependencies {
+            //Server
+            imports {
+                mavenBom "org.springframework.cloud:spring-cloud-starter-parent:${springCloudVersion}"
+            }
+
+            dependency "org.projectlombok:lombok:${lombokVersion}"
+            dependency "org.mapstruct:mapstruct:${mapstructVersion}"
+            dependency "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+            dependency "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+            dependency "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${springBootVersion}"
+            dependency "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
+            dependency "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+
+            dependency "org.springdoc:springdoc-openapi-webflux-core:${springDocVersion}"
+            dependency "org.springdoc:springdoc-openapi-webflux-ui:${springDocVersion}"
+
+            dependency "com.nimbusds:nimbus-jose-jwt:${nimbusJoseJwtVersion}"
+            dependency "edu.vt.middleware:vt-password:${vtPasswordVersion}"
+
+            //Test
+            dependency "org.junit.jupiter:junit-jupiter:${jupiterVersion}"
+            dependency "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+            dependency "org.testcontainers:testcontainers:${testcontainersVersion}"
+            dependency "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+            dependency "io.projectreactor:reactor-test:${reactorTestVersion}"
+        }
+    }
+}
+
+// assumed that all subprojects are java-based modules
+subprojects {
+    apply from: "${rootDir}/gradle/java.gradle"
+    apply from: "${rootDir}/gradle/checkstyle.gradle"
+
+    dependencies {
+        implementation 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        implementation 'org.mapstruct:mapstruct'
+        annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
+    }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+// https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
+
+wrapper {
+    gradleVersion = "6.2.2"
+}
