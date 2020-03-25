@@ -2,6 +2,8 @@ language: java
 install: true
 
 os: linux
+dist: trusty
+sudo: required
 
 jdk:
   - oraclejdk12
