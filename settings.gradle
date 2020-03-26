@@ -5,4 +5,6 @@ include 'maas-vaadin'
 include 'maas-bpm'
 include 'maas-shared'
 include 'maas-sd'
+include 'maas-config'
+include 'maas-data'
 

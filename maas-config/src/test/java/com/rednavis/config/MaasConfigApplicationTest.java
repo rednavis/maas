@@ -1,4 +1,4 @@
-package com.rednavis.auth;
+package com.rednavis.config;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,11 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
 @Tag("IntegrationTest")
-class MaasAuthApplicationTest {
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {MaasConfigApplicationTest.class})
+class MaasConfigApplicationTest {
 
   @Test
   public void test() {

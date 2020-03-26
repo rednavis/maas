@@ -2,7 +2,12 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.google.cloud.tools.jib'
 
 dependencies {
+    implementation project(':maas-shared')
+
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     implementation 'org.camunda.bpm:camunda-engine-plugin-connect'
@@ -10,6 +15,9 @@ dependencies {
 
     implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp'
     implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest'
+
+    implementation 'org.springdoc:springdoc-openapi-webflux-core'
+    implementation 'org.springdoc:springdoc-openapi-webflux-ui'
 
     implementation 'com.h2database:h2'
     implementation 'javax.activation:activation'

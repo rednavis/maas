@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: maas-auth
+          uri: lb://maas-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<path>.*), /$\{path}
+        - id: maas-bpm
+          uri: lb://maas-bpm
+          predicates:
+            - Path=/bpm/**
+          filters:
+            - RewritePath=/bpm/(?<path>.*), /$\{path}
+        - id: maas-vaadin
+          uri: lb://maas-vaadin
+          predicates:
+            - Path=/vaadin/**
+          filters:
+            - RewritePath=/vaadin/(?<path>.*), /$\{path}
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs

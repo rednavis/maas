@@ -16,21 +16,30 @@ Material assets management system.
 - Swagger
 
 ## Clone project
-`git clone git@github.com:rednavis/maas-api.git`
+```
+git clone git@github.com:rednavis/maas-api.git
+```
 
 ## Build project
-`./gradlew clean build`
-
-`./gradlew bootRun`
+```
+./gradlew clean build
+./gradlew bootRun
+```
 
 ## Create dependency report
-`./gradlew clean htmlDependencyReport`
+```
+./gradlew clean htmlDependencyReport
+```
 
 ## Update dependency
-`./gradlew dependencyUpdates`
+```
+./gradlew dependencyUpdates
+```
 
 ## Create docker image
-`./gradlew clean bootJar jibDockerBuild`
+```
+./gradlew clean bootJar jibDockerBuild
+```
 
 ## Swagger
-http://localhost:8081/swagger-ui.html
+http://localhost:8080/swagger-ui.html
