@@ -3,6 +3,16 @@ apply plugin: 'com.google.cloud.tools.jib'
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    implementation 'org.camunda.bpm:camunda-engine-plugin-connect'
+    implementation 'org.camunda.bpm:camunda-engine-plugin-spin'
+
+    implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp'
+    implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest'
+
+    implementation 'com.h2database:h2'
+    implementation 'javax.activation:activation'
 }
 
 jib {
