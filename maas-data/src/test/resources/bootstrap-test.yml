@@ -1,17 +1,5 @@
-spring:
-  cloud:
-    #Disable discovery
-    discovery:
-      enabled: false
-    #Disable cloud config and config discovery
-    config:
-      discovery:
-        enabled: false
-      enabled: false
-  data:
-    mongodb:
-      database: test
-      auto-index-creation: true
+eureka:
+  enabled: false
 
 logging:
   level:

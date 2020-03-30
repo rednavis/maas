@@ -1,6 +1,10 @@
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.google.cloud.tools.jib'
 
+configurations.all {
+    exclude group: 'javax.ws.rs', module: 'jsr311-api'
+}
+
 dependencies {
     implementation project(':maas-shared')
 
@@ -8,7 +12,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.camunda.bpm:camunda-engine-plugin-connect'
     implementation 'org.camunda.bpm:camunda-engine-plugin-spin'

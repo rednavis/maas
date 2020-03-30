@@ -6,6 +6,12 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  data:
+    mongodb:
+      database: maas
+      host: localhost
+      port: 27017
+      auto-index-creation: true
 
 eureka:
   enabled: true

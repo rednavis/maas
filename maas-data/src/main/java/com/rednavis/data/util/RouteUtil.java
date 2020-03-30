@@ -4,9 +4,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import lombok.experimental.UtilityClass;
 import org.reactivestreams.Publisher;
-import org.springframework.util.StringUtils;
-import org.springframework.web.reactive.function.server.RequestPredicate;
-import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
@@ -38,9 +35,5 @@ public class RouteUtil {
     return ServerResponse.badRequest()
         .contentType(APPLICATION_JSON)
         .bodyValue(errMessage);
-  }
-
-  public static RequestPredicate hasQueryParam(String name) {
-    return RequestPredicates.queryParam(name, p -> StringUtils.hasText(p));
   }
 }

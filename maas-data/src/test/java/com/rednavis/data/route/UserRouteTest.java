@@ -48,6 +48,9 @@ public class UserRouteTest extends MaasDataApplicationTest {
         .build();
   }
 
+  /**
+   * cleanUp.
+   */
   @BeforeEach
   public void cleanUp() {
     Mono<Void> deleteAll = userRepository.deleteAll();

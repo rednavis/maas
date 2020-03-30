@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
 @Tag("IntegrationTest")
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(properties = {"spring.cloud.config.enabled=false"})
 class MaasAuthApplicationTest {
 
   @Test

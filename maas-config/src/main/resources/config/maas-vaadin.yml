@@ -1,11 +1,18 @@
 server:
-  port: 0
+  port: 8080
+
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
-  instance:
-    hostname: localhost
+  enabled: true
   client:
-    registerWithEureka: false
-    fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true

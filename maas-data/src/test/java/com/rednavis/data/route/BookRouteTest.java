@@ -47,6 +47,9 @@ public class BookRouteTest extends MaasDataApplicationTest {
         .build();
   }
 
+  /**
+   * cleanUp.
+   */
   @BeforeEach
   public void cleanUp() {
     Mono<Void> deleteAll = bookRepository.deleteAll();

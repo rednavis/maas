@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/rednavis/maas.svg?branch=master)](https://travis-ci.com/rednavis/maas)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d888b4131a264e8fa14b26b528a1f2fc)](https://www.codacy.com/gh/rednavis/maas?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rednavis/maas&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/rednavis/maas/branch/master/graph/badge.svg)](https://codecov.io/gh/rednavis/maas)
 
 # maas
 Material assets management system.
@@ -42,4 +43,10 @@ git clone git@github.com:rednavis/maas-api.git
 ```
 
 ## Swagger
-http://localhost:8080/swagger-ui.html
+http://localhost:8081/swagger-ui.html
+
+## Camunda
+http://localhost:8081/app/welcome/index.html
+
+## H2-Console
+http://localhost:8081/h2-console

@@ -1,9 +1,44 @@
 server:
   port: 0
 
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
 eureka:
+  enabled: true
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
   instance:
     preferIpAddress: true
+
+management:
+  health:
+    camunda:
+      enabled: false
+
+#Camunda config
+camunda.bpm:
+  history-level: full
+  filter:
+    create: All tasks
+  admin-user:
+    id: admin
+    password: admin
+    email: admin@camunda.com
+    first-name: Camunda
+    last-name: Admin
+
+logging:
+  level:
+    org.camunda: INFO

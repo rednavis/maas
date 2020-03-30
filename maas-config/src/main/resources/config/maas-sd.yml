@@ -1,7 +1,14 @@
 server:
   port: 8761
 
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
 eureka:
+  enabled: true
   instance:
     hostname: localhost
   client:
@@ -9,3 +16,5 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    healthcheck:
+      enabled: true

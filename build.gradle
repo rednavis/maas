@@ -28,10 +28,6 @@ allprojects {
     apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
 
-//    configurations.all {
-//        exclude group: 'javax.ws.rs', module: 'jsr311-api'
-//    }
-
     repositories {
         jcenter()
         mavenCentral()

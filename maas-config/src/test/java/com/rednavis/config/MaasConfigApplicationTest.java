@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Tag("IntegrationTest")
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {MaasConfigApplicationTest.class})
+@SpringBootTest
 class MaasConfigApplicationTest {
 
   @Test

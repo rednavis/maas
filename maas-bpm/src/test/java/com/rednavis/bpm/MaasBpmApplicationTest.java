@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Tag("IntegrationTest")
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {MaasBpmApplication.class})
+@SpringBootTest(properties = {"spring.cloud.config.enabled=false"})
 class MaasBpmApplicationTest {
 
   @Test

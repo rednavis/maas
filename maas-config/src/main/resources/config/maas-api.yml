@@ -1,15 +1,11 @@
 server:
-  port: 8080
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
+  port: 8081
 
 spring:
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     gateway:
       discovery:
         locator:
@@ -39,3 +35,21 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - id: camunda
+          uri: lb://maas-bpm
+          predicates:
+            - Path=/api/**,/app/**,/lib/**,/camunda-welcome
+        - id: h2console
+          uri: lb://maas-bpm
+          predicates:
+            - Path=/h2-console/**
+
+eureka:
+  enabled: true
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
