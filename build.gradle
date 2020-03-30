@@ -19,7 +19,7 @@ ext {
     h2Version = '1.4.200'
     activationVersion = '1.1.1'
     testcontainersVersion = '1.13.0'
-    reactorTestVersion = '3.3.3.RELEASE'
+    reactorTestVersion = '3.3.4.RELEASE'
 }
 
 allprojects {
@@ -28,9 +28,9 @@ allprojects {
     apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
 
-    configurations.all {
+//    configurations.all {
 //        exclude group: 'javax.ws.rs', module: 'jsr311-api'
-    }
+//    }
 
     repositories {
         jcenter()
@@ -82,8 +82,6 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         implementation 'org.mapstruct:mapstruct'
         annotationProcessor 'org.mapstruct:mapstruct-processor'
-
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

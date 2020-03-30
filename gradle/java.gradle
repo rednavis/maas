@@ -38,4 +38,7 @@ task integrationTest(type: Test) {
     useJUnitPlatform() {
         includeTags 'IntegrationTest'
     }
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
 }
