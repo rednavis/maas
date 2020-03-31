@@ -1,5 +1,6 @@
 package com.rednavis.mock.config;
 
+import com.rednavis.mock.service.BookMockService;
 import com.rednavis.mock.service.UserMockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,14 @@ import org.springframework.stereotype.Component;
 public class MockConfig implements ApplicationListener<ApplicationReadyEvent> {
 
   private final UserMockService userMockService;
+  private final BookMockService bookMockService;
 
   @Override
   public void onApplicationEvent(ApplicationReadyEvent event) {
-    log.info("Generate Mock Data...");
+    log.info("Generate User Mock Data...");
     userMockService.mock();
+
+    log.info("Generate Book Mock Data...");
+    bookMockService.mock();
   }
 }

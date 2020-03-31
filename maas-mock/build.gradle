@@ -5,6 +5,11 @@ dependencies {
     implementation project(':maas-shared')
     implementation project(':maas-webflux')
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     implementation 'net.andreinc.mockneat:mockneat'
 }
 
