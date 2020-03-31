@@ -1,6 +1,7 @@
 package com.rednavis.data.route;
 
 import static com.rednavis.shared.util.RestUrlUtils.COUNT_URL;
+import static com.rednavis.shared.util.RestUrlUtils.DELETEALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.DELETEBYID_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDBYEMAIL_URL;
@@ -41,6 +42,7 @@ public class UserRoute {
             .GET(FINDBYEMAIL_URL, accept(MediaType.APPLICATION_JSON), userHandler::findByEmail)
             .GET(FINDBYUSERNAME_URL, accept(MediaType.APPLICATION_JSON), userHandler::findByUserName)
             .GET(COUNT_URL, accept(MediaType.APPLICATION_JSON), userHandler::count)
+            .DELETE(DELETEALL_URL, accept(MediaType.APPLICATION_JSON), userHandler::deleteAll)
             .DELETE(DELETEBYID_URL, accept(MediaType.APPLICATION_JSON), userHandler::deleteById)
             .build())
         .build();

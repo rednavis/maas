@@ -1,8 +1,11 @@
-package com.rednavis.auth.service.password;
+package com.rednavis.auth.service;
 
 import java.util.Collections;
 import java.util.List;
+import com.rednavis.auth.exception.CannotPerformOperationException;
+import com.rednavis.auth.exception.InvalidHashException;
 import com.rednavis.auth.exception.MaasAuthException;
+import com.rednavis.auth.util.PasswordUtils;
 import edu.vt.middleware.password.Password;
 import edu.vt.middleware.password.PasswordData;
 import edu.vt.middleware.password.PasswordValidator;
@@ -39,12 +42,12 @@ public class PasswordService {
   }
 
   /**
-   * generatePassword
+   * generatePasswordHash.
    *
    * @param password password
    * @return
    */
-  public String generatePassword(String password) {
+  public String generatePasswordHash(String password) {
     try {
       return PasswordUtils.createHash(password);
     } catch (CannotPerformOperationException e) {

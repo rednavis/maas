@@ -2,6 +2,7 @@ package com.rednavis.data.route;
 
 import static com.rednavis.shared.util.RestUrlUtils.BOOK_URL;
 import static com.rednavis.shared.util.RestUrlUtils.COUNT_URL;
+import static com.rednavis.shared.util.RestUrlUtils.DELETEALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.DELETEBYID_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDBYID_URL;
@@ -14,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import com.rednavis.data.MaasDataApplicationTest;
-import com.rednavis.data.repository.BookRepository;
 import com.rednavis.data.service.BookService;
 import com.rednavis.shared.dto.Book;
 import com.rednavis.shared.dto.BookStatus;
@@ -30,8 +30,6 @@ public class BookRouteTest extends MaasDataApplicationTest {
   private static final Book NEW_BOOK1 = createBook(1);
   private static final Book NEW_BOOK2 = createBook(2);
 
-  @Autowired
-  private BookRepository bookRepository;
   @Autowired
   private BookService bookService;
 
@@ -52,7 +50,7 @@ public class BookRouteTest extends MaasDataApplicationTest {
    */
   @BeforeEach
   public void cleanUp() {
-    Mono<Void> deleteAll = bookRepository.deleteAll();
+    Mono<Void> deleteAll = bookService.deleteAll();
     StepVerifier
         .create(deleteAll)
         .verifyComplete();
@@ -174,6 +172,26 @@ public class BookRouteTest extends MaasDataApplicationTest {
         .expectStatus().isOk()
         .expectBody(Long.class)
         .value(count -> assertEquals(1, count));
+  }
+
+  @Test
+  void deleteAll() {
+    bookService.insert(NEW_BOOK1)
+        .block();
+
+    getWebTestClient().delete()
+        .uri(BOOK_URL + DELETEALL_URL)
+        .accept(APPLICATION_JSON)
+        .exchange()
+        .expectStatus().isOk();
+
+    getWebTestClient().get()
+        .uri(BOOK_URL + COUNT_URL)
+        .accept(APPLICATION_JSON)
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(Long.class)
+        .value(count -> assertEquals(0, count));
   }
 
   @Test

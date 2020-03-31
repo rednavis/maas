@@ -1,9 +1,9 @@
 package com.rednavis.data.handler;
 
-import static com.rednavis.data.util.RouteUtil.createBadRequest;
-import static com.rednavis.data.util.RouteUtil.createOkResponse;
 import static com.rednavis.shared.util.RestUrlUtils.LIMIT;
 import static com.rednavis.shared.util.RestUrlUtils.OFFSET;
+import static com.rednavis.webflux.util.RouteUtils.createBadRequest;
+import static com.rednavis.webflux.util.RouteUtils.createOkResponse;
 
 import com.rednavis.data.service.BookService;
 import com.rednavis.shared.dto.Book;
@@ -74,6 +74,16 @@ public class BookHandler {
    */
   public Mono<ServerResponse> count(ServerRequest request) {
     return createOkResponse(bookService.count(), Long.class);
+  }
+
+  /**
+   * deleteAll.
+   *
+   * @param request request
+   * @return
+   */
+  public Mono<ServerResponse> deleteAll(ServerRequest request) {
+    return createOkResponse(bookService.deleteAll(), Void.class);
   }
 
   /**

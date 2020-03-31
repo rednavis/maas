@@ -20,7 +20,7 @@ eureka:
     healthcheck:
       enabled: true
   instance:
-    preferIpAddress: true
+    preferIpAddress: false
 
 management:
   health:

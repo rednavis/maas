@@ -1,6 +1,4 @@
 plugins {
-    id 'java'
-    id 'idea'
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'org.springframework.boot' version '2.2.6.RELEASE' apply false
     id 'com.google.cloud.tools.jib' version '2.1.0' apply false
@@ -16,6 +14,7 @@ ext {
     camundaVersion = '7.13.0-alpha2'
     nimbusJoseJwtVersion = '8.11'
     vtPasswordVersion = '3.1.2'
+    mockneatVersion = '0.3.8'
     h2Version = '1.4.200'
     activationVersion = '1.1.1'
     testcontainersVersion = '1.13.0'
@@ -56,6 +55,7 @@ allprojects {
 
             dependency "com.nimbusds:nimbus-jose-jwt:${nimbusJoseJwtVersion}"
             dependency "edu.vt.middleware:vt-password:${vtPasswordVersion}"
+            dependency "net.andreinc.mockneat:mockneat:${mockneatVersion}"
 
             dependency "com.h2database:h2:${h2Version}"
             dependency "javax.activation:activation:${activationVersion}"

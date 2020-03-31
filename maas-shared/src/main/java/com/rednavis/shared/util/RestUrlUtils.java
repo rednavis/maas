@@ -11,6 +11,7 @@ public class RestUrlUtils {
   public static final String ROOT_API_URL = "/api";
   public static final String BOOK_URL = ROOT_API_URL + "/book";
   public static final String USER_URL = ROOT_API_URL + "/user";
+  public static final String PASSWORD_URL = ROOT_API_URL + "/password";
 
   public static final String INSERT_URL = "/insert";
   public static final String SAVE_URL = "/save";
@@ -19,5 +20,7 @@ public class RestUrlUtils {
   public static final String FINDBYEMAIL_URL = "/findByEmail/{email}";
   public static final String FINDBYUSERNAME_URL = "/findByUserName/{userName}";
   public static final String COUNT_URL = "/count";
+  public static final String DELETEALL_URL = "/deleteAll";
   public static final String DELETEBYID_URL = "/deleteById/{id}";
+  public static final String GENERATE_PASSWORD_HASH_URL = "/generatePasswordHash/{password}";
 }

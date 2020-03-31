@@ -1,4 +1,4 @@
-package com.rednavis.auth.service.auth;
+package com.rednavis.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

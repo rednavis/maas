@@ -85,4 +85,13 @@ public class BookService {
   public Mono<Void> deleteById(String bookId) {
     return bookRepository.deleteById(bookId);
   }
+
+  /**
+   * deleteAll.
+   *
+   * @return
+   */
+  public Mono<Void> deleteAll() {
+    return bookRepository.deleteAll();
+  }
 }

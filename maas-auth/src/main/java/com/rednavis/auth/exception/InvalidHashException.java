@@ -1,6 +1,6 @@
-package com.rednavis.auth.service.password;
+package com.rednavis.auth.exception;
 
-class InvalidHashException extends Exception {
+public class InvalidHashException extends Exception {
 
   public InvalidHashException(String message) {
     super(message);

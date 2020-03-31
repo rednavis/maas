@@ -1,4 +1,4 @@
-package com.rednavis.auth.service.password;
+package com.rednavis.auth.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -6,10 +6,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import com.rednavis.auth.exception.CannotPerformOperationException;
+import com.rednavis.auth.exception.InvalidHashException;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-class PasswordUtils {
+public class PasswordUtils {
 
   private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA512";
 
@@ -30,6 +32,13 @@ class PasswordUtils {
     return createHash(password.toCharArray());
   }
 
+  /**
+   * createHash.
+   *
+   * @param password password
+   * @return String
+   * @throws CannotPerformOperationException CannotPerformOperationException
+   */
   public static String createHash(char[] password) throws CannotPerformOperationException {
     // Generate a random salt
     SecureRandom random = new SecureRandom();
@@ -44,10 +53,28 @@ class PasswordUtils {
     return "SHA512:" + PBKDF2_ITERATIONS + ":" + hashSize + ":" + toBase64(salt) + ":" + toBase64(hash);
   }
 
+  /**
+   * verifyPassword.
+   *
+   * @param password    password
+   * @param correctHash correctHash
+   * @return boolean
+   * @throws CannotPerformOperationException CannotPerformOperationException
+   * @throws InvalidHashException            InvalidHashException
+   */
   public static boolean verifyPassword(String password, String correctHash) throws CannotPerformOperationException, InvalidHashException {
     return verifyPassword(password.toCharArray(), correctHash);
   }
 
+  /**
+   * verifyPassword.
+   *
+   * @param password    password
+   * @param correctHash correctHash
+   * @return boolean
+   * @throws CannotPerformOperationException CannotPerformOperationException
+   * @throws InvalidHashException            InvalidHashException
+   */
   public static boolean verifyPassword(char[] password, String correctHash) throws CannotPerformOperationException, InvalidHashException {
     // Decode the hash into its parameters
     String[] params = correctHash.split(":");

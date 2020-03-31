@@ -1,11 +1,12 @@
 package com.rednavis.auth;
 
-import lombok.extern.slf4j.Slf4j;
+import com.rednavis.webflux.WebFluxModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
-@Slf4j
 @SpringBootApplication
+@Import(WebFluxModule.class)
 public class MaasAuthApplication {
 
   public static void main(String... args) {

@@ -7,4 +7,6 @@ include 'maas-shared'
 include 'maas-sd'
 include 'maas-config'
 include 'maas-data'
+include 'maas-mock'
+include 'maas-webflux'
 

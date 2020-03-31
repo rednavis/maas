@@ -1,6 +1,7 @@
 package com.rednavis.data.route;
 
 import static com.rednavis.shared.util.RestUrlUtils.COUNT_URL;
+import static com.rednavis.shared.util.RestUrlUtils.DELETEALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.DELETEBYID_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDALL_URL;
 import static com.rednavis.shared.util.RestUrlUtils.FINDBYEMAIL_URL;
@@ -16,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import com.rednavis.data.MaasDataApplicationTest;
-import com.rednavis.data.repository.UserRepository;
 import com.rednavis.data.service.UserService;
 import com.rednavis.shared.dto.User;
 import com.rednavis.shared.dto.UserRole;
@@ -32,8 +32,6 @@ public class UserRouteTest extends MaasDataApplicationTest {
   private static final User NEW_USER1 = createUser(1);
   private static final User NEW_USER2 = createUser(2);
 
-  @Autowired
-  private UserRepository userRepository;
   @Autowired
   private UserService userService;
 
@@ -53,7 +51,7 @@ public class UserRouteTest extends MaasDataApplicationTest {
    */
   @BeforeEach
   public void cleanUp() {
-    Mono<Void> deleteAll = userRepository.deleteAll();
+    Mono<Void> deleteAll = userService.deleteAll();
     StepVerifier
         .create(deleteAll)
         .verifyComplete();
@@ -223,6 +221,26 @@ public class UserRouteTest extends MaasDataApplicationTest {
         .expectStatus().isOk()
         .expectBody(Long.class)
         .value(count -> assertEquals(1, count));
+  }
+
+  @Test
+  void deleteAll() {
+    userService.insert(NEW_USER1)
+        .block();
+
+    getWebTestClient().delete()
+        .uri(USER_URL + DELETEALL_URL)
+        .accept(APPLICATION_JSON)
+        .exchange()
+        .expectStatus().isOk();
+
+    getWebTestClient().get()
+        .uri(USER_URL + COUNT_URL)
+        .accept(APPLICATION_JSON)
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(Long.class)
+        .value(count -> assertEquals(0, count));
   }
 
   @Test
