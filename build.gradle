@@ -14,7 +14,7 @@ ext {
     springCloudVersion = 'Hoxton.SR3'
     springDocVersion = '1.3.0'
     camundaVersion = '7.13.0-alpha2'
-    nimbusJoseJwtVersion = '8.10'
+    nimbusJoseJwtVersion = '8.11'
     vtPasswordVersion = '3.1.2'
     h2Version = '1.4.200'
     activationVersion = '1.1.1'
