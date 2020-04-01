@@ -9,8 +9,8 @@ public class AuthService {
 
   //private final PasswordService passwordService;
   //private final JwtTokenService jwtTokenService;
-  //private final UserService userService;
-  //private final RefreshTokenRepository refreshTokenRepository;
+  //private final MaasDataUserRestService maasDataUserRestService;
+  //private final MaasDataRefreshTokenRestService maasDataRefreshTokenRestService;
 
   //public Mono<SignInResponse> signIn(SignInRequest signInRequest) {
   //  return Mono.just(StringUtils.isEmailValid(signInRequest.getUserName()))
@@ -22,12 +22,12 @@ public class AuthService {
   //}
 
   //private Mono<User> findByEmail(String email) {
-  //  return userService.findByEmail(email)
+  //  return maasDataUserRestService.findByEmail(email)
   //      .switchIfEmpty(Mono.error(new UsernameNotFoundException("User not found [email: " + email + "]")));
   //}
 
   //private Mono<User> findByUserName(String userName) {
-  //  return userService.findByUserName(userName)
+  //  return maasDataUserRestService.findByUserName(userName)
   //      .switchIfEmpty(Mono.error(new UsernameNotFoundException("User not found [userName: " + userName + "]")));
   //}
 
@@ -44,10 +44,10 @@ public class AuthService {
   //  return Mono.fromSupplier(refreshTokenRequest::getRefreshToken)
   //      .map(token -> jwtTokenService.checkToken(JwtTokenEnum.JWT_REFRESH_TOKEN, token))
   //      .filter(Objects::nonNull)
-  //      .flatMap(signedJwt -> refreshTokenRepository.findRefreshTokenEntityByRefreshToken(signedJwt.serialize()))
+  //      .flatMap(signedJwt -> maasDataRefreshTokenRestService.findByRefreshToken(signedJwt.serialize()))
   //      .filter(Objects::nonNull)
-  //      .flatMap(refreshTokenEntity -> refreshTokenRepository.deleteById(refreshTokenEntity.getId())
-  //          .then(userService.findById(refreshTokenEntity.getUserId())))
+  //      .flatMap(refreshToken -> maasDataRefreshTokenRestService.deleteById(refreshToken.getId())
+  //          .then(maasDataUserRestService.findById(refreshToken.getUserId())))
   //      .flatMap(this::generateTokens);
   //}
 
@@ -67,14 +67,13 @@ public class AuthService {
   //          .build());
   //}
 
-  //private Mono<RefreshTokenEntity> saveRefreshToken(User user, JwtTokenInfo refreshToken) {
-  //  UserEntity userEntity = USER_MAPPER.dtoToEntity(user);
-  //
-  //  RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity();
-  //  refreshTokenEntity.setRefreshToken(refreshToken.getToken());
-  //  refreshTokenEntity.setExpiration(Instant.ofEpochMilli(refreshToken.getExpirationTime()));
-  //  refreshTokenEntity.setUserId(userEntity.getId());
-  //  return refreshTokenRepository.save(refreshTokenEntity);
+  //private Mono<RefreshToken> saveRefreshToken(User user, JwtTokenInfo jwtTokenInfo) {
+  //  RefreshToken refreshToken = RefreshToken.builder()
+  //      .refreshToken(jwtTokenInfo.getToken())
+  //      .expiration(Instant.ofEpochMilli(jwtTokenInfo.getExpirationTime()))
+  //      .userId(user.getId())
+  //      .build();
+  //  return maasDataRefreshTokenRestService.insert(refreshToken);
   //}
 
   //private User createNewUser(SignUpRequest signUpRequest) {
