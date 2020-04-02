@@ -30,6 +30,12 @@ public class MaasDataRefreshTokenRestService {
     this.dataWebClient = dataWebClient;
   }
 
+  /**
+   * insert.
+   *
+   * @param refreshToken refreshToken
+   * @return
+   */
   public Mono<RefreshToken> insert(RefreshToken refreshToken) {
     return dataWebClient.build()
         .post()
@@ -41,6 +47,12 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(RefreshToken.class);
   }
 
+  /**
+   * save.
+   *
+   * @param refreshToken refreshToken
+   * @return
+   */
   public Mono<RefreshToken> save(RefreshToken refreshToken) {
     return dataWebClient.build()
         .put()
@@ -52,6 +64,13 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(RefreshToken.class);
   }
 
+  /**
+   * findAll.
+   *
+   * @param limit  limit
+   * @param offset offset
+   * @return
+   */
   public Flux<RefreshToken> findAll(int limit, int offset) {
     return dataWebClient.build()
         .get()
@@ -64,6 +83,12 @@ public class MaasDataRefreshTokenRestService {
         .bodyToFlux(RefreshToken.class);
   }
 
+  /**
+   * findById.
+   *
+   * @param refreshTokenId refreshTokenId
+   * @return
+   */
   public Mono<RefreshToken> findById(String refreshTokenId) {
     return dataWebClient.build()
         .get()
@@ -74,6 +99,12 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(RefreshToken.class);
   }
 
+  /**
+   * findByRefreshToken.
+   *
+   * @param refreshToken refreshToken
+   * @return
+   */
   public Mono<RefreshToken> findByRefreshToken(String refreshToken) {
     return dataWebClient.build()
         .get()
@@ -84,6 +115,11 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(RefreshToken.class);
   }
 
+  /**
+   * count.
+   *
+   * @return
+   */
   public Mono<Long> count() {
     return dataWebClient.build()
         .get()
@@ -94,6 +130,11 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(Long.class);
   }
 
+  /**
+   * deleteAll.
+   *
+   * @return
+   */
   public Mono<Void> deleteAll() {
     return dataWebClient.build()
         .delete()
@@ -104,6 +145,12 @@ public class MaasDataRefreshTokenRestService {
         .bodyToMono(Void.class);
   }
 
+  /**
+   * deleteById.
+   *
+   * @param refreshTokenId refreshTokenId
+   * @return
+   */
   public Mono<Void> deleteById(String refreshTokenId) {
     return dataWebClient.build()
         .delete()

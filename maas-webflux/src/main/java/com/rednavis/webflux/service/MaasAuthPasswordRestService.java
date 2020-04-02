@@ -17,6 +17,12 @@ public class MaasAuthPasswordRestService {
     this.authWebClient = authWebClient;
   }
 
+  /**
+   * generatePasswordHash.
+   *
+   * @param password password
+   * @return
+   */
   public Mono<String> generatePasswordHash(String password) {
     return authWebClient.build()
         .get()

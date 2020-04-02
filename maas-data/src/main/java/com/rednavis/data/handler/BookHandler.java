@@ -7,17 +7,17 @@ import static com.rednavis.webflux.util.RouteUtils.createOkResponse;
 
 import com.rednavis.data.service.BookService;
 import com.rednavis.shared.dto.Book;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
+@RequiredArgsConstructor
 public class BookHandler {
 
-  @Autowired
-  private BookService bookService;
+  private final BookService bookService;
 
   /**
    * insert.

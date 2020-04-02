@@ -11,7 +11,6 @@ import static com.rednavis.shared.util.RestUrlUtils.LIMIT;
 import static com.rednavis.shared.util.RestUrlUtils.OFFSET;
 import static com.rednavis.shared.util.RestUrlUtils.REFRESH_TOKEN_URL;
 import static com.rednavis.shared.util.RestUrlUtils.SAVE_URL;
-import static com.rednavis.shared.util.RestUrlUtils.USER_URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -151,7 +150,7 @@ class RefreshTokenRouteTest extends MaasDataApplicationTest {
         .getRefreshToken();
 
     getWebTestClient().get()
-        .uri(uriBuilder -> uriBuilder.path(USER_URL + FINDBYREFRESHTOKEN_URL)
+        .uri(uriBuilder -> uriBuilder.path(REFRESH_TOKEN_URL + FINDBYREFRESHTOKEN_URL)
             .build(refreshToken))
         .accept(APPLICATION_JSON)
         .exchange()

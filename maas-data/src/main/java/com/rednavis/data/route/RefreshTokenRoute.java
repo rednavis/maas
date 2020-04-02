@@ -12,7 +12,7 @@ import static com.rednavis.shared.util.RestUrlUtils.SAVE_URL;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
 import com.rednavis.data.handler.RefreshTokenHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -20,10 +20,10 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 
 @Configuration
+@RequiredArgsConstructor
 public class RefreshTokenRoute {
 
-  @Autowired
-  private RefreshTokenHandler refreshTokenHandler;
+  private final RefreshTokenHandler refreshTokenHandler;
 
   /**
    * bookRouteFunction.
@@ -31,7 +31,7 @@ public class RefreshTokenRoute {
    * @return
    */
   @Bean
-  public RouterFunction bookRouteFunction() {
+  public RouterFunction refreshTokenRouteFunction() {
     return RouterFunctions.route()
         .path(REFRESH_TOKEN_URL, builder -> builder
             .POST(INSERT_URL, accept(MediaType.APPLICATION_JSON), refreshTokenHandler::insert)

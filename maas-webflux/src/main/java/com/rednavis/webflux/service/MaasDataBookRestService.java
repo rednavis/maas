@@ -28,6 +28,12 @@ public class MaasDataBookRestService {
     this.dataWebClient = dataWebClient;
   }
 
+  /**
+   * insert.
+   *
+   * @param book book
+   * @return
+   */
   public Mono<Book> insert(Book book) {
     return dataWebClient.build()
         .post()
@@ -39,6 +45,12 @@ public class MaasDataBookRestService {
         .bodyToMono(Book.class);
   }
 
+  /**
+   * save.
+   *
+   * @param book book
+   * @return
+   */
   public Mono<Book> save(Book book) {
     return dataWebClient.build()
         .put()
@@ -50,6 +62,13 @@ public class MaasDataBookRestService {
         .bodyToMono(Book.class);
   }
 
+  /**
+   * findAll.
+   *
+   * @param limit  limit
+   * @param offset offset
+   * @return
+   */
   public Flux<Book> findAll(int limit, int offset) {
     return dataWebClient.build()
         .get()
@@ -62,6 +81,12 @@ public class MaasDataBookRestService {
         .bodyToFlux(Book.class);
   }
 
+  /**
+   * findById.
+   *
+   * @param bookId bookId
+   * @return
+   */
   public Mono<Book> findById(String bookId) {
     return dataWebClient.build()
         .get()
@@ -72,6 +97,11 @@ public class MaasDataBookRestService {
         .bodyToMono(Book.class);
   }
 
+  /**
+   * count.
+   *
+   * @return
+   */
   public Mono<Long> count() {
     return dataWebClient.build()
         .get()
@@ -82,6 +112,11 @@ public class MaasDataBookRestService {
         .bodyToMono(Long.class);
   }
 
+  /**
+   * deleteAll.
+   *
+   * @return
+   */
   public Mono<Void> deleteAll() {
     return dataWebClient.build()
         .delete()
@@ -92,6 +127,12 @@ public class MaasDataBookRestService {
         .bodyToMono(Void.class);
   }
 
+  /**
+   * deleteById.
+   *
+   * @param bookId bookId
+   * @return
+   */
   public Mono<Void> deleteById(String bookId) {
     return dataWebClient.build()
         .delete()

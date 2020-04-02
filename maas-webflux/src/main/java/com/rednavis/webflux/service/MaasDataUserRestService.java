@@ -30,6 +30,12 @@ public class MaasDataUserRestService {
     this.dataWebClient = dataWebClient;
   }
 
+  /**
+   * insert.
+   *
+   * @param user user
+   * @return
+   */
   public Mono<User> insert(User user) {
     return dataWebClient.build()
         .post()
@@ -41,6 +47,12 @@ public class MaasDataUserRestService {
         .bodyToMono(User.class);
   }
 
+  /**
+   * save.
+   *
+   * @param user user
+   * @return
+   */
   public Mono<User> save(User user) {
     return dataWebClient.build()
         .put()
@@ -52,6 +64,13 @@ public class MaasDataUserRestService {
         .bodyToMono(User.class);
   }
 
+  /**
+   * findAll.
+   *
+   * @param limit  limit
+   * @param offset offset
+   * @return
+   */
   public Flux<User> findAll(int limit, int offset) {
     return dataWebClient.build()
         .get()
@@ -64,6 +83,12 @@ public class MaasDataUserRestService {
         .bodyToFlux(User.class);
   }
 
+  /**
+   * findById.
+   *
+   * @param userId userId
+   * @return
+   */
   public Mono<User> findById(String userId) {
     return dataWebClient.build()
         .get()
@@ -74,6 +99,12 @@ public class MaasDataUserRestService {
         .bodyToMono(User.class);
   }
 
+  /**
+   * findByEmail.
+   *
+   * @param email email
+   * @return
+   */
   public Mono<User> findByEmail(String email) {
     return dataWebClient.build()
         .get()
@@ -84,6 +115,12 @@ public class MaasDataUserRestService {
         .bodyToMono(User.class);
   }
 
+  /**
+   * findByUserName.
+   *
+   * @param userName userName
+   * @return
+   */
   public Mono<User> findByUserName(String userName) {
     return dataWebClient.build()
         .get()
@@ -94,6 +131,11 @@ public class MaasDataUserRestService {
         .bodyToMono(User.class);
   }
 
+  /**
+   * count.
+   *
+   * @return
+   */
   public Mono<Long> count() {
     return dataWebClient.build()
         .get()
@@ -104,6 +146,11 @@ public class MaasDataUserRestService {
         .bodyToMono(Long.class);
   }
 
+  /**
+   * deleteAll.
+   *
+   * @return
+   */
   public Mono<Void> deleteAll() {
     return dataWebClient.build()
         .delete()
@@ -114,6 +161,12 @@ public class MaasDataUserRestService {
         .bodyToMono(Void.class);
   }
 
+  /**
+   * deleteById.
+   *
+   * @param userId userId
+   * @return
+   */
   public Mono<Void> deleteById(String userId) {
     return dataWebClient.build()
         .delete()

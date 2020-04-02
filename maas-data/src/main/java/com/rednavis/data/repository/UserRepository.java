@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UserRepository extends GlobalReactiveMongoRepository<UserEntity, String> {
+public interface UserRepository extends GlobalRepository<UserEntity, String> {
 
   Mono<UserEntity> findByEmail(String email);
 
