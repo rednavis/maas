@@ -50,3 +50,7 @@ http://localhost:8081/app/welcome/index.html
 
 ## H2-Console
 http://localhost:8081/h2-console
+
+## Maas-Vaadin
+1. If you do not have node.js installed locally, please run `./gradlew vaadinPrepareNode` once.
+2. Run the following command in this repo, to create necessary Vaadin config files `./gradlew clean vaadinPrepareFrontend`

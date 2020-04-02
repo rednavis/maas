@@ -64,7 +64,7 @@ public class JwtTokenService {
         .claim(CurrentUser.Fields.firstName, currentUser.getFirstName())
         .claim(CurrentUser.Fields.lastName, currentUser.getLastName())
         .claim(CurrentUser.Fields.userName, currentUser.getUserName())
-        .claim(CurrentUser.Fields.roles, currentUser.getRoles())
+        .claim(CurrentUser.Fields.role, currentUser.getRole())
         .build();
     SignedJWT signedJwt = new SignedJWT(new JWSHeader(JWS_ALGORITHM), claimsSet);
     //Apply the HMAC protection

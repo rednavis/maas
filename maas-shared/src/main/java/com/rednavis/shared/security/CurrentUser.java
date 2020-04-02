@@ -17,5 +17,5 @@ public class CurrentUser {
   private String lastName;
   private String userName;
   private String email;
-  private UserRole roles;
+  private UserRole role;
 }
