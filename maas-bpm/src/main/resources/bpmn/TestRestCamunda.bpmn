@@ -4,6 +4,9 @@
   xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="Camunda Modeler" exporterVersion="3.6.0"
   id="Definitions_0hvalbj" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="TestRestCamunda" isExecutable="true" name="TestRestCamunda">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1dc9w07</bpmn:outgoing>
+    </bpmn:startEvent>
     <bpmn:endEvent id="EndEvent_145x5ce">
       <bpmn:incoming>SequenceFlow_1rfzfpf</bpmn:incoming>
     </bpmn:endEvent>
@@ -11,16 +14,18 @@
     <bpmn:sequenceFlow id="SequenceFlow_1rfzfpf" sourceRef="Task_139itjy" targetRef="EndEvent_145x5ce"/>
     <bpmn:sequenceFlow id="SequenceFlow_1mb0xsd" sourceRef="Task_0ww0ns0" targetRef="Task_139itjy"/>
     <bpmn:serviceTask id="Task_0ww0ns0" name="DemoTask" camunda:delegateExpression="${demoDelegate}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="bookId"/>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1dc9w07</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mb0xsd</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>SequenceFlow_1dc9w07</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:userTask id="Task_139itjy" name="UserTask">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="stringParameter">${stringParameter}</camunda:inputParameter>
+          <camunda:inputParameter name="book"/>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1mb0xsd</bpmn:incoming>

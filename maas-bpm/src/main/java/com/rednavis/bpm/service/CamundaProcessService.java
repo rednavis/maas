@@ -27,5 +27,4 @@ public class CamundaProcessService {
   public ProcessInstance startProcessInstanceWithVariables(String processDefinitionId, Map<String, Object> variables) {
     return runtimeService.startProcessInstanceById(processDefinitionId, variables);
   }
-
 }
