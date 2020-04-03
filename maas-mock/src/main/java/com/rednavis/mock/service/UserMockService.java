@@ -33,9 +33,17 @@ public class UserMockService {
   public void mock() {
     maasDataUserRestService.deleteAll()
         .then(createAdmin())
-        .map(admin -> maasDataUserRestService.insert(admin))
+        .flatMap(admin -> maasDataUserRestService.insert(admin)
+            .map(userInsert -> {
+              log.info("Create default admin [admin: {}]", userInsert);
+              return userInsert;
+            }))
         .then(createUser())
-        .map(user -> maasDataUserRestService.insert(user))
+        .flatMap(user -> maasDataUserRestService.insert(user)
+            .map(userInsert -> {
+              log.info("Create default user [user: {}]", userInsert);
+              return userInsert;
+            }))
         .subscribe();
   }
 

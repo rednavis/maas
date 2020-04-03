@@ -1,6 +1,6 @@
 package com.rednavis.shared.rest.response;
 
-import java.util.Date;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class ErrorResponse {
 
-  private Date timestamp;
+  private Instant timestamp;
   private String path;
   private String exceptionId;
   private String error;

@@ -37,7 +37,7 @@ public class RestUrlUtils {
   public static final String AUTH_URL_SIGNUP = "/signup";
   public static final String AUTH_URL_REFRESH_TOKEN = "/refreshToken";
 
-  public static final String USER_URL_VAADIN = "/api/users";
+  public static final String USER_URL_VAADIN = "/api/user";
   public static final String USER_URL_PATTERN = USER_URL_VAADIN + "/**";
   public static final String USER_URL_USER = "/user";
   public static final String USER_URL_ADMIN = "/admin";

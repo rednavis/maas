@@ -2,7 +2,9 @@
   "name": "no-name",
   "license": "UNLICENSED",
   "dependencies": {
+    "fontawesome-icon": "1.0.4",
     "@polymer/polymer": "3.2.0",
+    "@polymer/iron-ajax": "3.0.1",
     "@webcomponents/webcomponentsjs": "^2.2.10",
     "@vaadin/flow-deps": "./target/frontend"
   },
@@ -16,5 +18,8 @@
     "webpack-merge": "4.2.2",
     "raw-loader": "3.0.0"
   },
-  "vaadinAppPackageHash": ""
+  "vaadin": {
+    "disableUsageStatistics": true
+  },
+  "vaadinAppPackageHash": "48f291c150a5ba617e5838f8278694c4e471fffd1a258f9e0a5e97d0e8194eca"
 }

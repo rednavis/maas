@@ -23,6 +23,12 @@ spring:
             - Path=/bpm/**
           filters:
             - RewritePath=/bpm/(?<path>.*), /$\{path}
+        - id: maas-data
+          uri: lb://maas-data
+          predicates:
+            - Path=/data/**
+          filters:
+            - RewritePath=/data/(?<path>.*), /$\{path}
         - id: maas-vaadin
           uri: lb://maas-vaadin
           predicates:

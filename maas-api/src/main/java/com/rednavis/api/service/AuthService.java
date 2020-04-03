@@ -47,7 +47,14 @@ public class AuthService {
     return Mono.just(StringUtils.isEmailValid(signInRequest.getUserName()))
         .flatMap(
             isValid -> (isValid.booleanValue()) ? findByEmail(signInRequest.getUserName()) : findByUserName(signInRequest.getUserName()))
-        .filter(user -> maasAuthPasswordRestService.validatePassword(user.getPassword(), signInRequest.getPassword()).block())
+        .flatMap(user -> maasAuthPasswordRestService.validatePassword(user.getPassword(), signInRequest.getPassword())
+            .map(valid -> {
+              if (valid) {
+                return user;
+              } else {
+                return null;
+              }
+            }))
         .switchIfEmpty(Mono.error(new BadCredentialsException("Wrong email or password")))
         .flatMap(this::generateTokens);
   }
