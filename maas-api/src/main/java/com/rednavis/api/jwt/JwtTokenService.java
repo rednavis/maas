@@ -1,10 +1,14 @@
-package com.rednavis.auth.jwt;
+package com.rednavis.api.jwt;
 
 import static java.time.Instant.now;
 
 import java.text.ParseException;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -12,12 +16,19 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.rednavis.auth.exception.JwtAccessTokenExpiredException;
-import com.rednavis.auth.exception.JwtException;
-import com.rednavis.auth.exception.JwtRefreshTokenExpiredException;
+import com.rednavis.api.exception.JwtAccessTokenExpiredException;
+import com.rednavis.api.exception.JwtException;
+import com.rednavis.api.exception.JwtRefreshTokenExpiredException;
+import com.rednavis.shared.dto.UserRole;
 import com.rednavis.shared.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.server.ServerWebExchange;
 
 @Configuration
 @RequiredArgsConstructor
@@ -64,7 +75,10 @@ public class JwtTokenService {
         .claim(CurrentUser.Fields.firstName, currentUser.getFirstName())
         .claim(CurrentUser.Fields.lastName, currentUser.getLastName())
         .claim(CurrentUser.Fields.userName, currentUser.getUserName())
-        .claim(CurrentUser.Fields.role, currentUser.getRole())
+        .claim(CurrentUser.Fields.role, List.of(currentUser.getRole())
+            .stream()
+            .map(Enum::name)
+            .collect(Collectors.joining(",")))
         .build();
     SignedJWT signedJwt = new SignedJWT(new JWSHeader(JWS_ALGORITHM), claimsSet);
     //Apply the HMAC protection
@@ -90,6 +104,18 @@ public class JwtTokenService {
       throw new JwtException("Can't sign refresh token email [email: " + currentUser.getEmail() + "]");
     }
     return signedJwt.serialize();
+  }
+
+  /**
+   * extractAuthorization.
+   *
+   * @param serverWebExchange serverWebExchange
+   * @return
+   */
+  public String extractAuthorization(ServerWebExchange serverWebExchange) {
+    return serverWebExchange.getRequest()
+        .getHeaders()
+        .getFirst(HttpHeaders.AUTHORIZATION);
   }
 
   /**
@@ -130,6 +156,40 @@ public class JwtTokenService {
       return signedJwt;
     } catch (ParseException | JOSEException e) {
       throw new JwtException("Can't parse token [token: " + token + "]");
+    }
+  }
+
+  /**
+   * createAuthentication.
+   *
+   * @param signedJwt signedJwt
+   * @return
+   */
+  public Authentication createAuthentication(SignedJWT signedJwt) {
+    try {
+      String subject = signedJwt.getJWTClaimsSet()
+          .getSubject();
+      String id = signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.id);
+      String firstName = signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.firstName);
+      String lastName = signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.lastName);
+      String userName = signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.userName);
+      String roleInLine = signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.role);
+      List<UserRole> roles = Stream.of(roleInLine.split(","))
+          .map(UserRole::valueOf)
+          .collect(Collectors.toList());
+      CurrentUser currentUser = new CurrentUser(id, firstName, lastName, userName, subject, roles.get(0));
+
+      Collection<? extends GrantedAuthority> authorities = Stream.of(roleInLine.split(","))
+          .map(SimpleGrantedAuthority::new)
+          .collect(Collectors.toList());
+      return new UsernamePasswordAuthenticationToken(currentUser, null, authorities);
+    } catch (ParseException e) {
+      throw new JwtException("Can't parse signedJwt [signedJwt: " + signedJwt.serialize() + "]");
     }
   }
 

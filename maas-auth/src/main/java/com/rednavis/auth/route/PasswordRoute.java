@@ -2,6 +2,7 @@ package com.rednavis.auth.route;
 
 import static com.rednavis.shared.util.RestUrlUtils.GENERATE_PASSWORD_HASH_URL;
 import static com.rednavis.shared.util.RestUrlUtils.PASSWORD_URL;
+import static com.rednavis.shared.util.RestUrlUtils.VALIDATE_PASSWORD_URL;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
 import com.rednavis.auth.handler.PasswordHandler;
@@ -28,6 +29,7 @@ public class PasswordRoute {
     return RouterFunctions.route()
         .path(PASSWORD_URL, builder -> builder
             .GET(GENERATE_PASSWORD_HASH_URL, accept(MediaType.APPLICATION_JSON), passwordHandler::generatePasswordHash)
+            .GET(VALIDATE_PASSWORD_URL, accept(MediaType.APPLICATION_JSON), passwordHandler::validatePassword)
             .build())
         .build();
   }

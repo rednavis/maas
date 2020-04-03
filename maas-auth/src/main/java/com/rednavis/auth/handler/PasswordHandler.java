@@ -1,5 +1,7 @@
 package com.rednavis.auth.handler;
 
+import static com.rednavis.shared.util.RestUrlUtils.PASSWORD;
+import static com.rednavis.shared.util.RestUrlUtils.PASSWORD_DB;
 import static com.rednavis.webflux.util.RouteUtils.createOkResponse;
 
 import com.rednavis.auth.service.PasswordService;
@@ -27,5 +29,18 @@ public class PasswordHandler {
           String passwordHash = passwordService.generatePasswordHash(password);
           return createOkResponse(Mono.defer(() -> Mono.just(passwordHash)), String.class);
         }));
+  }
+
+  /**
+   * validatePassword.
+   *
+   * @param request request
+   * @return
+   */
+  public Mono<ServerResponse> validatePassword(ServerRequest request) {
+    String passwordDb = request.queryParam(PASSWORD_DB).orElse("");
+    String password = request.queryParam(PASSWORD).orElse("");
+    boolean valid = passwordService.validatePassword(passwordDb, password);
+    return createOkResponse(Mono.defer(() -> Mono.just(valid)), Boolean.class);
   }
 }

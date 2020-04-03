@@ -1,4 +1,4 @@
-package com.rednavis.auth.jwt;
+package com.rednavis.api.jwt;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

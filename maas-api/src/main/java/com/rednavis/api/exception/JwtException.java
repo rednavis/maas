@@ -1,4 +1,4 @@
-package com.rednavis.auth.exception;
+package com.rednavis.api.exception;
 
 public class JwtException extends RuntimeException {
 

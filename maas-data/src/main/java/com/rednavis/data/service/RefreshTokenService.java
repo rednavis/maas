@@ -5,14 +5,14 @@ import static com.rednavis.data.mapper.MapperProvider.REFRESH_TOKEN_MAPPER;
 import com.rednavis.data.repository.RefreshTokenRepository;
 import com.rednavis.data.util.OffsetBasedPageRequest;
 import com.rednavis.shared.dto.RefreshToken;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RefreshTokenService {
 
   private final RefreshTokenRepository refreshTokenRepository;

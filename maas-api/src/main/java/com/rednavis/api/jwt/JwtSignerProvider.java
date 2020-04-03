@@ -1,9 +1,9 @@
-package com.rednavis.auth.jwt;
+package com.rednavis.api.jwt;
 
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
-import com.rednavis.auth.exception.JwtException;
+import com.rednavis.api.exception.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

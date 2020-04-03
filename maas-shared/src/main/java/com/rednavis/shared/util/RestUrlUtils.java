@@ -7,10 +7,13 @@ public class RestUrlUtils {
 
   public static final String LIMIT = "limit";
   public static final String OFFSET = "offset";
+  public static final String PASSWORD_DB = "passwordDB";
+  public static final String PASSWORD = "password";
 
   public static final String ROOT_API_URL = "/api";
   public static final String BOOK_URL = ROOT_API_URL + "/book";
   public static final String USER_URL = ROOT_API_URL + "/user";
+  public static final String AUTH_URL = ROOT_API_URL + "/auth";
   public static final String REFRESH_TOKEN_URL = ROOT_API_URL + "/refreshToken";
   public static final String PASSWORD_URL = ROOT_API_URL + "/password";
 
@@ -25,6 +28,7 @@ public class RestUrlUtils {
   public static final String DELETEALL_URL = "/deleteAll";
   public static final String DELETEBYID_URL = "/deleteById/{id}";
   public static final String GENERATE_PASSWORD_HASH_URL = "/generatePasswordHash/{password}";
+  public static final String VALIDATE_PASSWORD_URL = "/validatePassword";
 
   public static final String AUTH_URL_VAADIN = "/api/auth";
   public static final String AUTH_URL_PATTERN = AUTH_URL_VAADIN + "/**";

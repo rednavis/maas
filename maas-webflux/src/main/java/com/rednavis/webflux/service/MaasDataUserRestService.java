@@ -65,6 +65,23 @@ public class MaasDataUserRestService {
   }
 
   /**
+   * save.
+   *
+   * @param userMono userMono
+   * @return
+   */
+  public Mono<User> save(Mono<User> userMono) {
+    return dataWebClient.build()
+        .put()
+        .uri(uriBuilder -> uriBuilder.path(USER_URL)
+            .path(SAVE_URL)
+            .build())
+        .body(userMono, User.class)
+        .retrieve()
+        .bodyToMono(User.class);
+  }
+
+  /**
    * findAll.
    *
    * @param limit  limit
