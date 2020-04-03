@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CamundaProcessController {
 
+  //TODO Please, update README file
   private final CamundaProcessService camundaProcessService;
 
   /**
@@ -29,6 +30,7 @@ public class CamundaProcessController {
    * @param param param
    * @return
    */
+  //TODO Remove this method
   @GetMapping("/test")
   public ProcessInstanceDto test(@RequestParam(defaultValue = "default") String param) {
     List<ProcessDefinition> allProcesses = camundaProcessService.getAllProcesses();
@@ -56,11 +58,17 @@ public class CamundaProcessController {
    * @param params params
    * @return
    */
+  // TODO Implement parsing of user from token and adding him ro parameters map
   @PostMapping("/process/{id}")
-  public ProcessInstanceDto startProcess(@PathVariable String id, @RequestBody(required = false) Map<String, Object> params) {
+  public ProcessInstanceDto startProcess(@PathVariable String id,
+      /* @RequestHeader("Authentication") String jwtToken, */
+      @RequestBody(required = false) Map<String, Object> params) {
+    /* String user = getUserFromToken(jwtToken);
+    *  params.put("requestBy", user); */
     return ProcessInstanceDto.fromProcessInstance(camundaProcessService.startProcessInstanceWithVariables(id, params));
   }
 
+  //TODO Remove this method
   @GetMapping("/test1")
   public ResponseEntity<String> test1() {
     return ResponseEntity.ok("Hello World");
