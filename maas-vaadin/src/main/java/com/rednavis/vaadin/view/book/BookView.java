@@ -8,13 +8,19 @@ import static com.rednavis.vaadin.util.ConstantUtils.PAGE_BOOK_URL;
 import com.github.appreciated.app.layout.annotations.Caption;
 import com.github.appreciated.app.layout.annotations.Icon;
 import com.rednavis.shared.dto.Book;
+import com.rednavis.shared.rest.response.ProcessInstanceResponse;
 import com.rednavis.vaadin.annotation.AccessToken;
 import com.rednavis.vaadin.service.BookService;
+import com.rednavis.vaadin.service.BpmService;
 import com.rednavis.vaadin.view.MainView;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.router.PageTitle;
@@ -40,6 +46,9 @@ public class BookView extends PolymerTemplate<TemplateModel> {
 
   private final transient AccessToken accessToken;
   private final transient BookService bookService;
+  private final transient BpmService bpmService;
+
+  private GridCrud<Book> crud;
 
   /**
    * BookView.
@@ -47,15 +56,16 @@ public class BookView extends PolymerTemplate<TemplateModel> {
    * @param accessToken accessToken
    * @param bookService bookService
    */
-  public BookView(AccessToken accessToken, BookService bookService) {
+  public BookView(AccessToken accessToken, BookService bookService, BpmService bpmService) {
     this.accessToken = accessToken;
     this.bookService = bookService;
+    this.bpmService = bpmService;
 
     prepareUI();
   }
 
   private void prepareUI() {
-    GridCrud<Book> crud = new GridCrud<>(Book.class, new VerticalCrudLayout());
+    crud = new GridCrud<>(Book.class, new VerticalCrudLayout());
     crud.setSizeFull();
     crud.setCrudListener(new LazyCrudListener<>() {
       @Override
@@ -128,6 +138,17 @@ public class BookView extends PolymerTemplate<TemplateModel> {
         Book.Fields.author
     );
 
-    getElement().appendChild(crud.getElement());
+    getElement().appendChild(crud.getElement(), camunda().getElement());
+  }
+
+  private Button camunda() {
+    Button camundaBtn = new Button("Camunda");
+    camundaBtn.addClickListener((ComponentEventListener<ClickEvent<Button>>) event -> {
+      String processId = bpmService.getProcesseId(accessToken.getAccessToken());
+      String bookId = crud.getGrid().getSelectionModel().getFirstSelectedItem().get().getId();
+      ProcessInstanceResponse processInstanceResponse = bpmService.startProcesse(accessToken.getAccessToken(), processId, bookId);
+      Notification.show("RESPONSE: " + processInstanceResponse.toString());
+    });
+    return camundaBtn;
   }
 }

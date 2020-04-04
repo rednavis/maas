@@ -59,6 +59,10 @@ public class CamundaProcessController {
     String userName = parseToken(token);
     log.info("userName: {}", userName);
     config.put("requestBy", userName);
+    config.put("Test1", "Test1");
+    config.put("Test2", "Test2");
+    config.put("Test3", "Test3");
+    config.put("bookId1", "bookId1");
     log.info("PARAMS2: {}", config.entrySet()
         .stream()
         .map(entry -> entry.getKey() + " - " + entry.getValue())
@@ -71,7 +75,7 @@ public class CamundaProcessController {
     return ResponseEntity.ok("Hello World");
   }
 
-  public String parseToken(String token) {
+  private String parseToken(String token) {
     SignedJWT signedJwt;
     try {
       signedJwt = SignedJWT.parse(token);
