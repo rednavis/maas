@@ -1,12 +1,14 @@
 package com.rednavis.bpm.controller;
 
+import static com.rednavis.shared.util.StringUtils.BEARER_SPACE;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import com.rednavis.bpm.service.CamundaProcessService;
 import lombok.RequiredArgsConstructor;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionDto;
 import org.camunda.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.springframework.http.ResponseEntity;
@@ -14,32 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CamundaProcessController {
 
-  //TODO Please, update README file
   private final CamundaProcessService camundaProcessService;
-
-  /**
-   * test.
-   *
-   * @param param param
-   * @return
-   */
-  //TODO Remove this method
-  @GetMapping("/test")
-  public ProcessInstanceDto test(@RequestParam(defaultValue = "default") String param) {
-    List<ProcessDefinition> allProcesses = camundaProcessService.getAllProcesses();
-    ProcessDefinition processDefinition = allProcesses.get(0);
-    Map<String, Object> params = new HashMap<>();
-    params.put("stringParameter", param);
-    return ProcessInstanceDto
-        .fromProcessInstance(camundaProcessService.startProcessInstanceWithVariables(processDefinition.getId(), params));
-  }
 
   /**
    * getProcesses.
@@ -58,18 +43,26 @@ public class CamundaProcessController {
    * @param params params
    * @return
    */
-  // TODO Implement parsing of user from token and adding him ro parameters map
   @PostMapping("/process/{id}")
-  public ProcessInstanceDto startProcess(@PathVariable String id,
-      /* @RequestHeader("Authentication") String jwtToken, */
+  public ProcessInstanceDto startProcess(@PathVariable String id, @RequestHeader("Authorization") String jwtToken,
       @RequestBody(required = false) Map<String, Object> params) {
-    /* String user = getUserFromToken(jwtToken);
-    *  params.put("requestBy", user); */
-    return ProcessInstanceDto.fromProcessInstance(camundaProcessService.startProcessInstanceWithVariables(id, params));
+    Map<String, Object> config = (params == null) ? new HashMap<>() : new HashMap<>(params);
+    log.info("PARAMS1: {}", config.entrySet()
+        .stream()
+        .map(entry -> entry.getKey() + " - " + entry.getValue())
+        .collect(Collectors.joining(", ")));
+    String token = jwtToken.substring(BEARER_SPACE.length());
+    log.info("TOKEN: {}", token);
+    //String user = getUserFromToken(jwtToken);
+    config.put("requestBy", "Test");
+    log.info("PARAMS2: {}", config.entrySet()
+        .stream()
+        .map(entry -> entry.getKey() + " - " + entry.getValue())
+        .collect(Collectors.joining(", ")));
+    return ProcessInstanceDto.fromProcessInstance(camundaProcessService.startProcessInstanceWithVariables(id, config));
   }
 
-  //TODO Remove this method
-  @GetMapping("/test1")
+  @GetMapping("/test")
   public ResponseEntity<String> test1() {
     return ResponseEntity.ok("Hello World");
   }
