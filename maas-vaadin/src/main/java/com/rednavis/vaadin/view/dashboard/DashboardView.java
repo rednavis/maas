@@ -48,8 +48,8 @@ public class DashboardView extends Div {
     VerticalLayout verticalLayout = new VerticalLayout(new H2(actualUser.getCurrentUser().toString()),
         new TextArea("accessToken", accessToken.getAccessToken(), "empty token"),
         new H2(DateTimeFormatter.ISO_INSTANT.format(now())),
-        createUserButton(),
-        createAdminButton(),
+        //createUserButton(),
+        //createAdminButton(),
         createLogoutButton());
     add(verticalLayout);
   }

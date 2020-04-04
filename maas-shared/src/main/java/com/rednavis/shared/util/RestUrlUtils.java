@@ -43,7 +43,7 @@ public class RestUrlUtils {
   public static final String USER_URL_ADMIN = "/admin";
   public static final String USER_URL_FINDALL = "/findAll";
 
-  public static final String BOOK_URL_VAADIN = "/api/books";
+  public static final String BOOK_URL_VAADIN = "/api/book";
   public static final String BOOK_URL_PATTERN = BOOK_URL_VAADIN + "/**";
   public static final String BOOK_URL_INSERT = "/insert";
   public static final String BOOK_URL_SAVE = "/save";

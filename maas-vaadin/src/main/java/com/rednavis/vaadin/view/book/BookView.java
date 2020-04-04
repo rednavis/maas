@@ -67,25 +67,25 @@ public class BookView extends PolymerTemplate<TemplateModel> {
               // The number of items to load
               int limit = query.getLimit();
               log.info("limit: {}, offset: {}", limit, offset);
-              return bookService.findAll(limit, offset).stream();
+              return bookService.findAll(accessToken.getAccessToken(), limit, offset).stream();
             },
-            query -> (int) bookService.count()
+            query -> (int) bookService.count(accessToken.getAccessToken())
         );
       }
 
       @Override
       public Book add(Book book) {
-        return bookService.insert(book);
+        return bookService.insert(accessToken.getAccessToken(), book);
       }
 
       @Override
       public Book update(Book book) {
-        return bookService.save(book);
+        return bookService.save(accessToken.getAccessToken(), book);
       }
 
       @Override
       public void delete(Book book) {
-        bookService.delete(book.getId());
+        bookService.delete(accessToken.getAccessToken(), book.getId());
       }
     });
 

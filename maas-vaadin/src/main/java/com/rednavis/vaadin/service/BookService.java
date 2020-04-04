@@ -32,9 +32,9 @@ public class BookService {
    * @param book book
    * @return
    */
-  public Book insert(Book book) {
+  public Book insert(String accessToken, Book book) {
     String url = maasProperty.createBookUrl(BOOK_URL_INSERT);
-    return restService.post(url, book, Book.class);
+    return restService.postWithToken(url, book, accessToken, Book.class);
   }
 
   /**
@@ -43,9 +43,9 @@ public class BookService {
    * @param book book
    * @return
    */
-  public Book save(Book book) {
+  public Book save(String accessToken, Book book) {
     String url = maasProperty.createBookUrl(BOOK_URL_SAVE);
-    return restService.put(url, book, Book.class);
+    return restService.putWithToken(url, book, accessToken, Book.class);
   }
 
   /**
@@ -55,7 +55,7 @@ public class BookService {
    * @param offset offset
    * @return
    */
-  public List<Book> findAll(int limit, int offset) {
+  public List<Book> findAll(String accessToken, int limit, int offset) {
     String url = maasProperty.createBookUrl(BOOK_URL_FINDALL);
     try {
       URI builder = new URIBuilder(url)
@@ -63,7 +63,7 @@ public class BookService {
           .addParameter("offset", String.valueOf(offset))
           .build();
       log.info("findAll uri [url: {}]", builder.toString());
-      return restService.get(builder.toString(), new ParameterizedTypeReference<>() {
+      return restService.getWithToken(builder.toString(), accessToken, new ParameterizedTypeReference<>() {
       });
     } catch (URISyntaxException e) {
       log.error("Error parse uri [url: {}]", url);
@@ -76,9 +76,9 @@ public class BookService {
    *
    * @return
    */
-  public long count() {
+  public long count(String accessToken) {
     String url = maasProperty.createBookUrl(BOOK_URL_COUNT);
-    return restService.get(url, Long.class);
+    return restService.getWithToken(url, accessToken, Long.class);
   }
 
   /**
@@ -86,13 +86,13 @@ public class BookService {
    *
    * @param bookId bookId
    */
-  public void delete(String bookId) {
+  public void delete(String accessToken, String bookId) {
     String url = maasProperty.createBookUrl(BOOK_URL_DELETE);
     try {
       URI builder = new URIBuilder(url)
           .addParameter("bookId", bookId)
           .build();
-      restService.delete(builder.toString(), Void.class);
+      restService.deleteWithToken(builder.toString(), accessToken, Void.class);
     } catch (URISyntaxException e) {
       log.error("Error parse uri [url: {}]", url);
     }

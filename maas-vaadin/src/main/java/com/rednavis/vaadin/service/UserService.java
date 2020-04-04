@@ -1,9 +1,6 @@
 package com.rednavis.vaadin.service;
 
-import static com.rednavis.shared.util.RestUrlUtils.LIMIT;
-import static com.rednavis.shared.util.RestUrlUtils.OFFSET;
 import static com.rednavis.shared.util.RestUrlUtils.USER_URL_ADMIN;
-import static com.rednavis.shared.util.RestUrlUtils.USER_URL_FINDALL;
 import static com.rednavis.shared.util.RestUrlUtils.USER_URL_USER;
 
 import java.util.List;
@@ -13,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 @Slf4j
 @Service
@@ -52,12 +48,8 @@ public class UserService {
    * @return
    */
   public List<User> findAll(String accessToken) {
-    String url = new DefaultUriBuilderFactory().builder()
-        .path(maasProperty.createUserUrl(USER_URL_FINDALL))
-        .queryParam(LIMIT, 20)
-        .queryParam(OFFSET, 0)
-        .build()
-        .toString();
+    String url = "http://localhost:8081/data/api/user/findAll?limit=20&offset=0";
+    log.info("URL: {}", url);
     return restService.getWithToken(url, accessToken, new ParameterizedTypeReference<>() {
     });
   }

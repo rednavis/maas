@@ -36,7 +36,8 @@ public class JwtReactiveAuthenticationManager implements ReactiveAuthenticationM
         .cast(UsernamePasswordAuthenticationToken.class)
         .flatMap(token -> maasDataUserRestService.findById(token.getName()))
         .switchIfEmpty(Mono.defer(this::raiseBadCredentials))
-        .map(user -> createAuthentication(user, authentication));
+        .map(user -> createAuthentication(user, authentication))
+        .log();
   }
 
   private Authentication createAuthentication(User user, Authentication authentication) {

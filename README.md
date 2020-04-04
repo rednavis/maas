@@ -54,3 +54,14 @@ http://localhost:8081/h2-console
 ## Maas-Vaadin
 1. If you do not have node.js installed locally, please run `./gradlew vaadinPrepareNode` once.
 2. Run the following command in this repo, to create necessary Vaadin config files `./gradlew clean vaadinPrepareFrontend`
+
+## Run maas
+`./gradlew bootRun`
+1. Run maas-config
+2. Run maas-sd
+3. Run maas-api
+4. Run maas-auth
+5. Run maas-bpm
+6. Run maas-data
+7. Run maas-more - generate mock data
+8. Run maas-vaadin

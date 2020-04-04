@@ -1,7 +1,6 @@
 package com.rednavis.api.config;
 
 import static com.rednavis.shared.util.RestUrlUtils.AUTH_URL_PATTERN;
-import static com.rednavis.shared.util.RestUrlUtils.BOOK_URL_PATTERN;
 
 import java.util.List;
 import com.rednavis.api.security.JwtReactiveAuthenticationManager;
@@ -24,6 +23,10 @@ import reactor.core.publisher.Mono;
 public class SecurityConfig {
 
   private static final List<String> AUTH_WHITELIST = List.of(
+      "/h2-console/**",
+      "/api/**",
+      "/app/**",
+      "/lib/**",
       "/swagger-resources/**",
       "/swagger-ui.html",
       "/v3/api-docs/**",
@@ -67,9 +70,9 @@ public class SecurityConfig {
         .authorizeExchange()
         .pathMatchers(HttpMethod.OPTIONS).permitAll()
         .pathMatchers(AUTH_URL_PATTERN).permitAll()
-        .pathMatchers(BOOK_URL_PATTERN).permitAll()
         .pathMatchers(AUTH_WHITELIST.toArray(new String[AUTH_WHITELIST.size()])).permitAll()
-        .anyExchange().authenticated().and()
+        .anyExchange().authenticated()
+        .and()
         .build();
   }
 }

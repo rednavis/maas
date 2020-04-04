@@ -24,7 +24,7 @@ public class MaasProperty {
   }
 
   public String createBookUrl(String restPoint) {
-    return getApi().getServer() + BOOK_URL_VAADIN + restPoint;
+    return getApi().getServer() + "/data" + BOOK_URL_VAADIN + restPoint;
   }
 
   @Data

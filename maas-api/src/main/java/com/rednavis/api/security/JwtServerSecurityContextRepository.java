@@ -43,6 +43,7 @@ public class JwtServerSecurityContextRepository implements ServerSecurityContext
         .map(jwtTokenService::createAuthentication)
         .filter(Objects::nonNull)
         .flatMap(jwtReactiveAuthenticationManager::authenticate)
+        .log()
         .map(SecurityContextImpl::new);
   }
 }
