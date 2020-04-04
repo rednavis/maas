@@ -25,6 +25,7 @@ dependencies {
 
     implementation 'com.h2database:h2'
     implementation 'javax.activation:activation'
+    implementation 'com.nimbusds:nimbus-jose-jwt'
 }
 
 jib {

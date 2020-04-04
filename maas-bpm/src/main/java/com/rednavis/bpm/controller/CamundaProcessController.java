@@ -2,11 +2,14 @@ package com.rednavis.bpm.controller;
 
 import static com.rednavis.shared.util.StringUtils.BEARER_SPACE;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.nimbusds.jwt.SignedJWT;
 import com.rednavis.bpm.service.CamundaProcessService;
+import com.rednavis.shared.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionDto;
@@ -53,8 +56,9 @@ public class CamundaProcessController {
         .collect(Collectors.joining(", ")));
     String token = jwtToken.substring(BEARER_SPACE.length());
     log.info("TOKEN: {}", token);
-    //String user = getUserFromToken(jwtToken);
-    config.put("requestBy", "Test");
+    String userName = parseToken(token);
+    log.info("userName: {}", userName);
+    config.put("requestBy", userName);
     log.info("PARAMS2: {}", config.entrySet()
         .stream()
         .map(entry -> entry.getKey() + " - " + entry.getValue())
@@ -65,5 +69,16 @@ public class CamundaProcessController {
   @GetMapping("/test")
   public ResponseEntity<String> test1() {
     return ResponseEntity.ok("Hello World");
+  }
+
+  public String parseToken(String token) {
+    SignedJWT signedJwt;
+    try {
+      signedJwt = SignedJWT.parse(token);
+      return signedJwt.getJWTClaimsSet()
+          .getStringClaim(CurrentUser.Fields.userName);
+    } catch (ParseException e) {
+      throw new RuntimeException("Can't parse token [token: " + token + "]");
+    }
   }
 }
